@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boshe Park — Обратная связь</title>
+<style>
+  :root {
+    --green-dark: #1f5c3f;
+    --green: #2f7d54;
+    --green-light: #e8f4ec;
+    --accent: #d98e2b;
+    --text: #22302a;
+    --muted: #6b7a72;
+    --bg: #f6f8f6;
+    --card: #ffffff;
+    --border: #e1e8e2;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #eef6f0 0%, var(--bg) 320px);
+    color: var(--text);
+    padding-block: 32px;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-inline: 20px;
+  }
+  header.hero {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  header.hero .badge {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    background: var(--green-light);
+    border: 1px solid #cfe6d7;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  header.hero h1 {
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: var(--green-dark);
+  }
+  header.hero p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 2px rgba(20,40,30,0.03);
+  }
+  .q-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--text);
+  }
+  .q-sub {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+  .rating-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+  .rating-row:first-of-type { border-top: none; padding-top: 4px; }
+  .rating-label {
+    font-size: 14.5px;
+    flex: 1 1 auto;
+    line-height: 1.35;
+  }
+  .scale {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .scale label {
+    position: relative;
+  }
+  .scale input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    cursor: pointer;
+  }
+  .scale span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all .15s ease;
+    pointer-events: none;
+  }
+  .scale input[type="radio"]:checked + span {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .scale input[type="radio"]:hover + span {
+    border-color: var(--green);
+  }
+  .scale-caption {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .chip {
+    position: relative;
+  }
+  .chip input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .chip span {
+    display: inline-block;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+    transition: all .15s ease;
+    pointer-events: none;
+  }
+  .chip input:checked + span {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green-dark);
+    font-weight: 600;
+  }
+  textarea, input[type="text"] {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: inherit;
+    color: var(--text);
+    resize: vertical;
+    min-height: 44px;
+  }
+  textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  label.field-label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+  .submit-bar {
+    position: sticky;
+    bottom: 16px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  button#submitBtn {
+    background: var(--green-dark);
+    color: #fff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(31,92,63,0.3);
+    transition: transform .15s ease, box-shadow .15s ease;
+    width: 100%;
+    max-width: 360px;
+  }
+  button#submitBtn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(31,92,63,0.38); }
+  button#submitBtn:disabled { opacity: .6; cursor: default; transform: none; }
+  #statusMsg {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 14.5px;
+    min-height: 20px;
+  }
+  #statusMsg.success { color: var(--green-dark); font-weight: 600; }
+  #statusMsg.error { color: #b3401f; font-weight: 600; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12.5px;
+    margin-top: 28px;
+  }
+  .thankyou {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .thankyou.show { display: block; }
+  .thankyou .icon {
+    font-size: 52px;
+    margin-bottom: 12px;
+  }
+  .thankyou h2 { color: var(--green-dark); margin: 0 0 8px; }
+  .thankyou p { color: var(--muted); margin: 0; }
+  #formRoot.hide { display: none; }
+  @media (max-width: 480px) {
+    .rating-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .scale { align-self: stretch; justify-content: space-between; width: 100%; }
+    .scale label { flex: 1 1 auto; }
+    .scale span { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">Boshe Park</span>
+    <h1>Нам важно ваше мнение</h1>
+    <p>Пожалуйста, уделите минуту и расскажите, как прошёл ваш визит.<br>Это поможет нам стать лучше.</p>
+  </header>
+
+  <form id="feedbackForm">
+    <div id="formRoot">
+
+      <div class="card">
+        <p class="q-title">1. Оцените, пожалуйста, от 1 до 5</p>
+        <p class="q-sub">где 1 — «совсем недоволен», а 5 — «полностью доволен»</p>
+
+        <div class="rating-row">
+          <span class="rating-label">Качество и вкус блюд/напитков</span>
+          <div class="scale" data-name="q1_taste">
+            <label><input type="radio" name="q1_taste" value="1" required><span>1</span></label>
+            <label><input type="radio" name="q1_taste" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1_taste" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1_taste" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1_taste" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="rating-row">
+          <span class="rating-label">Скорость обслуживания</span>
+          <div class="scale" data-name="q1_speed">
+            <label><input type="radio" name="q1_speed" value="1" required><span>1</span></label>
+            <label><input type="radio" name="q1_speed" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1_speed" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1_speed" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1_speed" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="rating-row">
+          <span class="rating-label">Вежливость и внимательность кассира</span>
+          <div class="scale" data-name="q1_courtesy">
+            <label><input type="radio" name="q1_courtesy" value="1" required><span>1</span></label>
+            <label><input type="radio" name="q1_courtesy" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1_courtesy" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1_courtesy" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1_courtesy" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="rating-row">
+          <span class="rating-label">Чистота в зале и уборной</span>
+          <div class="scale" data-name="q1_cleanliness">
+            <label><input type="radio" name="q1_cleanliness" value="1" required><span>1</span></label>
+            <label><input type="radio" name="q1_cleanliness" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1_cleanliness" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1_cleanliness" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1_cleanliness" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="rating-row">
+          <span class="rating-label">Соотношение цены и качества</span>
+          <div class="scale" data-name="q1_value">
+            <label><input type="radio" name="q1_value" value="1" required><span>1</span></label>
+            <label><input type="radio" name="q1_value" value="2"><span>2</span></label>
+            <label><input type="radio" name="q1_value" value="3"><span>3</span></label>
+            <label><input type="radio" name="q1_value" value="4"><span>4</span></label>
+            <label><input type="radio" name="q1_value" value="5"><span>5</span></label>
+          </div>
+        </div>
+
+        <div class="scale-caption">
+          <span>1 — совсем недоволен</span>
+          <span>5 — полностью доволен</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="q-title">2. Если Вам не понравилось,</p>
+        <p class="q-sub">то над чем нам предстоит ещё поработать? (выберите нужное)</p>
+        <div class="chips" id="q2chips">
+          <label class="chip"><input type="checkbox" name="q2" value="не свежее"><span>не свежее</span></label>
+          <label class="chip"><input type="checkbox" name="q2" value="малый ассортимент"><span>малый ассортимент</span></label>
+          <label class="chip"><input type="checkbox" name="q2" value="пережарено"><span>пережарено</span></label>
+          <label class="chip"><input type="checkbox" name="q2" value="продукт сырой"><span>продукт сырой</span></label>
+          <label class="chip"><input type="checkbox" name="q2" value="заветрилось"><span>заветрилось</span></label>
+          <label class="chip"><input type="checkbox" name="q2" value="твердое"><span>твердое</span></label>
+        </div>
+        <label class="field-label" for="q2other">свой вариант</label>
+        <input type="text" id="q2other" name="q2other" placeholder="Напишите, если не нашли подходящий вариант выше">
+      </div>
+
+      <div class="card">
+        <p class="q-title">3. Чего нам не хватает в меню?</p>
+        <p class="q-sub">Что хотелось бы добавить? (выберите нужное)</p>
+        <div class="chips" id="q3chips">
+          <label class="chip"><input type="checkbox" name="q3" value="хот-дог"><span>хот-дог</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="френч-дог"><span>френч-дог</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="корн-дог"><span>корн-дог</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="вареная кукуруза"><span>вареная кукуруза</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="морковные дольки"><span>морковные дольки</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="овощи-гриль"><span>овощи-гриль</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="авторские чаи"><span>авторские чаи</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="мини-пицца"><span>мини-пицца</span></label>
+          <label class="chip"><input type="checkbox" name="q3" value="римская пицца"><span>римская пицца</span></label>
+        </div>
+        <label class="field-label" for="q3other">свой вариант</label>
+        <input type="text" id="q3other" name="q3other" placeholder="Напишите, если не нашли подходящий вариант выше">
+      </div>
+
+      <div class="submit-bar">
+        <button type="submit" id="submitBtn">Отправить отзыв</button>
+        <p id="statusMsg"></p>
+      </div>
+    </div>
+
+    <div class="thankyou" id="thankyou">
+      <div class="icon">🌳</div>
+      <h2>Спасибо за отзыв!</h2>
+      <p>Мы обязательно учтём ваши пожелания.</p>
+    </div>
+  </form>
+
+  <footer>Boshe Park · Форма обратной связи</footer>
+</div>
+
+<script>
+  var ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwlngWuDyi4PsDa84POMdUfpFUqgjuXKylNAgS-ZDElT3nrUmbgpxLI5PmrMV-nUko/exec";
+
+  var form = document.getElementById('feedbackForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var statusMsg = document.getElementById('statusMsg');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusMsg.textContent = '';
+    statusMsg.className = '';
+
+    var fd = new FormData(form);
+
+    var q2options = fd.getAll('q2').join(', ');
+    var q3options = fd.getAll('q3').join(', ');
+
+    var payload = {
+      q1_taste: fd.get('q1_taste') || '',
+      q1_speed: fd.get('q1_speed') || '',
+      q1_courtesy: fd.get('q1_courtesy') || '',
+      q1_cleanliness: fd.get('q1_cleanliness') || '',
+      q1_value: fd.get('q1_value') || '',
+      q2_options: q2options,
+      q2_other: fd.get('q2other') || '',
+      q3_options: q3options,
+      q3_other: fd.get('q3other') || ''
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем…';
+
+    fetch(ENDPOINT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        document.getElementById('formRoot').classList.add('hide');
+        document.getElementById('thankyou').classList.add('show');
+      })
+      .catch(function (err) {
+        statusMsg.textContent = 'Не удалось отправить отзыв. Попробуйте ещё раз.';
+        statusMsg.className = 'error';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Отправить отзыв';
+      });
+  });
+</script>
+
+</body>
+</html>
