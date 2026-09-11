@@ -277,6 +277,8 @@
   .thankyou h2 { color: var(--green-dark); margin: 0 0 8px; }
   .thankyou p { color: var(--muted); margin: 0; }
   #formRoot.hide { display: none; }
+  .promo-frame.hide { display: none; }
+  .gift-note { text-align: center; }
   @media (max-width: 480px) {
     .rating-row { flex-direction: column; align-items: flex-start; gap: 10px; }
     .scale { align-self: stretch; justify-content: space-between; width: 100%; }
@@ -294,7 +296,7 @@
     <p>Пожалуйста, уделите минуту и расскажите, как прошёл ваш визит.<br>Это поможет нам стать лучше.</p>
   </header>
 
-  <div class="promo-frame">
+  <div class="promo-frame" id="promoFrame">
     <img src="cup-banner.jpg" alt="Получи свой подарок за честный отзыв" loading="lazy">
   </div>
 
@@ -457,6 +459,7 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         document.getElementById('formRoot').classList.add('hide');
+        document.getElementById('promoFrame').classList.add('hide');
         document.getElementById('thankyou').classList.add('show');
       })
       .catch(function (err) {
